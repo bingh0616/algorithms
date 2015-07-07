@@ -11,11 +11,15 @@ class Solution:
         for i in xrange(9):
             for j in xrange(9):
                 if board[i][j] == '.': continue
-                num = int(board[i][j])
-                self.rows[i][num-1] = True
-                self.cols[j][num-1] = True
-                idx = (i/3) * 3 + j/3
-                self.sm[idx][num-1] = True
+                self.setExist(board, i, j, True)
+
+    def setExist(self, board, i, j, bl):
+        num = int(board[i][j])
+        self.rows[i][num-1] = bl
+        self.cols[j][num-1] = bl
+        idx = (i/3) * 3 + j/3
+        self.sm[idx][num-1] = bl
+
         
     def solveSudoku(self, board):
         self.process(board)
@@ -29,11 +33,7 @@ class Solution:
                         board[i][j] = str(k)
                         if self.isValid(board, i, j):
                             if self.helper(board): return True
-                            num = int(board[i][j])
-                            idx = (i/3) * 3 + j/3
-                            self.rows[i][num-1] = False
-                            self.cols[j][num-1] = False
-                            self.sm[idx][num-1] = False
+                            self.setExist(board, i, j, False)
 
                     board[i][j] = '.'
                     return False
@@ -44,9 +44,5 @@ class Solution:
         num = int(board[r][c])
         idx = (r/3) * 3 + c/3
         res = not self.rows[r][num-1] and not self.cols[c][num-1] and not self.sm[idx][num-1]
-        if res:
-            self.rows[r][num-1] = True
-            self.cols[c][num-1] = True
-            self.sm[idx][num-1] = True
+        if res: self.setExist(board, r, c, True)
         return res
-

@@ -14,3 +14,15 @@ class Solution:
             res.append(r)
             res.append([nums[0]]+r)
         return res
+
+class Solution:
+    # @param {integer[]} nums
+    # @return {integer[][]}
+    def subsets(self, nums):
+        nums.sort()
+        res = [[]]
+        
+        for n in nums:
+            res = res + [r + [n] for r in res]
+            
+        return res

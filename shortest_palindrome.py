@@ -22,6 +22,25 @@ class Solution:
                     i += 1
         return rev_s[:len(s)-lps[len(new_s)-1]] + s
 
+    # shorter version
+    def shortestPalindrome2(self, s):
+        rev_s = s[::-1]
+        new_s = s + '#' + rev_s
+        # stores longest prefix suffix table (same as KMP table)
+        lps = [0] * len(new_s)
+
+        for i in xrange(1, len(new_s)):
+            j = lps[i-1];
+            while j > 0 and new_s[i] != new_s[j]:
+                # use example 'abcabcabd' to understand the following line
+                j = lps[j-1]
+            j += 1 if new_s[i] == new_s[j] else 0
+            lps[i] = j
+
+        return rev_s[:len(s)-lps[len(new_s)-1]] + s
+
+
+
 def main():
     print Solution().shortestPalindrome('abcda')
     print Solution().shortestPalindrome('abcd')

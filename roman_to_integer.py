@@ -3,12 +3,12 @@ class Solution:
     # @param {string} s
     # @return {integer}
     def romanToInt(self, s):
-        vals = {'I':1, 'V':5, 'X':10, 'L':50, 'C':100, 'D':500, 'M':1000}
+        dt = {'M': 1000, 'D': 500, 'C': 100, 'L': 50, 'X': 10, 'V': 5, 'I': 1}
         res = 0
-        for i, r in enumerate(s):
-            if i == 0 or vals[r] <= vals[s[i-1]]:
-                res += vals[r]
-            else:
-                res += (vals[r] - 2 * vals[s[i-1]])
+        
+        for i in xrange(len(s)):
+            res += int(dt[s[i]])
+            if i > 0 and dt[s[i]] > dt[s[i-1]]:
+                res -= (2*dt[s[i-1]])
                 
         return res

@@ -1,24 +1,27 @@
 # problem description: https://leetcode.com/problems/search-in-rotated-sorted-array/
 
-class Solution:
-    # @param {integer[]} nums
-    # @param {integer} target
-    # @return {integer}
+class Solution(object):
     def search(self, nums, target):
-        left, right = 0, len(nums)-1
-        while left <= right:
-            mid = (left+right)/2
-            if target == nums[mid]:
-                return mid
-            if nums[mid] > nums[right]:
-                if target >= nums[left] and target < nums[mid]:
-                    right = mid-1
+        """
+        :type nums: List[int]
+        :type target: int
+        :rtype: int
+        """
+        l, r = 0, len(nums)-1
+        while l<=r:
+            m = (l+r)/2
+            if target == nums[m]: return m
+            # use nums[m] < nums[r] instead of nums[m] > nums[r] to avoid when l+1 == r (m == l)
+            if nums[m] < nums[r]:
+                if target > nums[m] and target <= nums[r]:
+                    l = m+1
                 else:
-                    left = mid+1
+                    r = m-1
             else:
-                if target > nums[mid] and target <= nums[right]:
-                    left = mid+1
+                if target >= nums[l] and target < nums[m]:
+                    r = m-1
                 else:
-                    right = mid-1
+                    l = m+1
+                
         return -1
 

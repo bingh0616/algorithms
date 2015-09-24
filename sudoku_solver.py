@@ -46,3 +46,39 @@ class Solution:
         res = not self.rows[r][num-1] and not self.cols[c][num-1] and not self.sm[idx][num-1]
         if res: self.setExist(board, r, c, True)
         return res
+
+# simpler code
+class Solution(object):
+    def solveSudoku(self, board):
+        """
+        :type board: List[List[str]]
+        :rtype: void Do not return anything, modify board in-place instead.
+        """
+        self.helper(board)
+    
+    def helper(self, board):
+        for i in xrange(9):
+            for j in xrange(9):
+                if board[i][j] == '.':
+                    for v in xrange(1, 10):
+                        board[i][j] = str(v)
+                        if self.isValidSudoku(board, i, j):
+                            if self.helper(board): return True
+                    board[i][j] = '.'
+                    return False
+                            
+        return True
+                
+        
+    def isValidSudoku(self, board, i, j):
+        ch = board[i][j]
+        for m in xrange(9):
+            if board[i][m] == ch and m != j: return False
+            if board[m][j] == ch and m != i: return False
+        
+        p, q = i/3*3, j/3*3
+        for m in xrange(p, p+3):
+            for n in xrange(q, q+3):
+                if board[m][n] == ch and (not (i == m and j == n)): return False
+                        
+        return True

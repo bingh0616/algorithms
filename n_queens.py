@@ -1,3 +1,5 @@
+# problem description: https://leetcode.com/problems/n-queens/
+
 class Solution:
     def printSolution(self, grid, n):
         solution = []
@@ -33,6 +35,48 @@ class Solution:
             if i-k >= 0 and j+k < n:
                 if grid[i-k][j+k] == 'Q':
                     return False
+        return True
+
+# Oct. 7
+class Solution(object):
+    def solveNQueens(self, n):
+        """
+        :type n: int
+        :rtype: List[List[str]]
+        """
+        board = [['.']*n for i in xrange(n)]
+        res = []
+        self.nqueens(board, 0, n, res)
+        return res
+
+    def printsolution(self, board, n, res):
+        solution = []
+        for i in xrange(n):
+            solution.append(''.join(board[i]))
+        res.append(solution)
+    
+    def nqueens(self, board, i, n, res):
+        if i == n:
+            self.printsolution(board, n, res)
+            return
+        for j in xrange(n):
+            if self.isvalid(board, i, j, n):
+                board[i][j] = 'Q'
+                self.nqueens(board, i+1, n, res)
+                board[i][j] = '.'
+    
+    def isvalid(self, board, i, j, n):
+        # check up
+        for s in xrange(i):
+            if board[s][j] == 'Q': return False
+        
+        # check diag
+        for k in xrange(1, i+1):
+            if i-k >= 0 and j-k >= 0 and board[i-k][j-k] == 'Q':
+                return False
+            if i-k >= 0 and j+k < n and board[i-k][j+k] == 'Q':
+                return False
+            
         return True
 
 def main():

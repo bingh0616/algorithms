@@ -17,3 +17,17 @@ class Solution:
             if max_reach == i and i != len(nums)-1: return -1
                 
         return step
+
+class Solution(object):
+    def jump(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        step, max_reach, reach = 0, 0, 0
+        for i in xrange(len(nums)):
+            if i > reach:
+                step += 1
+                reach = max_reach
+            max_reach = max(max_reach, i+nums[i])
+        return step

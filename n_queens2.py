@@ -32,3 +32,39 @@ class Solution:
                 if grid[i-k][j+k] == 'Q':
                     return False
         return True
+
+# Oct. 7 2015
+class Solution(object):
+    def totalNQueens(self, n):
+        """
+        :type n: int
+        :rtype: int
+        """
+        board = [['.']*n for i in xrange(n)]
+        res = [0]
+        self.nqueens(board, 0, n, res)
+        return res[0]
+  
+    def nqueens(self, board, i, n, res):
+        if i == n:
+            res[0] += 1
+            return
+        for j in xrange(n):
+            if self.isvalid(board, i, j, n):
+                board[i][j] = 'Q'
+                self.nqueens(board, i+1, n, res)
+                board[i][j] = '.'
+    
+    def isvalid(self, board, i, j, n):
+        # check up
+        for s in xrange(i):
+            if board[s][j] == 'Q': return False
+        
+        # check diag
+        for k in xrange(1, i+1):
+            if i-k >= 0 and j-k >= 0 and board[i-k][j-k] == 'Q':
+                return False
+            if i-k >= 0 and j+k < n and board[i-k][j+k] == 'Q':
+                return False
+            
+        return True

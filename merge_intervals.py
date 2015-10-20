@@ -17,9 +17,7 @@ class Solution:
         
         for i in xrange(1, len(intervals)):
             it = intervals[i]
-            if s > it.end:
-                res.append(it)
-            elif e < it.start:
+            if e < it.start:
                 res.append(Interval(s, e))
                 s, e = it.start, it.end
             else:

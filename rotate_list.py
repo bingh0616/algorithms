@@ -36,3 +36,33 @@ class Solution:
         prev.next = None
         
         return head
+
+# 10.14.2015
+# Definition for singly-linked list.
+# class ListNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
+
+class Solution(object):
+    def rotateRight(self, head, k):
+        """
+        :type head: ListNode
+        :type k: int
+        :rtype: ListNode
+        """
+        if not head: return head
+        n = 1
+        curr = head
+        while curr.next:
+            n += 1
+            curr = curr.next
+        k %= n
+        last = curr
+        curr = head
+        for i in xrange(n-k-1):
+            curr = curr.next
+        last.next = head
+        head = curr.next
+        curr.next = None
+        return head

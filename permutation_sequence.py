@@ -32,3 +32,25 @@ class Solution:
             k %= fact
             
         return res
+
+# 10.13.2015
+class Solution(object):
+    def getPermutation(self, n, k):
+        """
+        :type n: int
+        :type k: int
+        :rtype: str
+        """
+        if k > math.factorial(n): return ''
+        arr = range(1, n+1)
+        res = ''
+        k -= 1
+        while n > 0:
+            fact = math.factorial(n-1)
+            elem = k / fact
+            k %= fact
+            res += str(arr[elem])
+            n -= 1
+            arr = arr[:elem] + arr[elem+1:]
+            
+        return res

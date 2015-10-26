@@ -12,6 +12,7 @@ class Solution:
             return [[]]
         res = []
         for i in range(len(A)):
+            # res += [[A[i]]+j for j in self.helper(A[i+1:], k-1)]
             for r in self.helper(A[i+1:], k-1):
                 res.append([A[i]] + r)
                 

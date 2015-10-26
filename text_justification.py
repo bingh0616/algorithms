@@ -45,3 +45,43 @@ class Solution:
         res.append(line)
         return res
 
+
+# 10.20.2015
+class Solution(object):
+    def fullJustify(self, words, maxWidth):
+        """
+        :type words: List[str]
+        :type maxWidth: int
+        :rtype: List[str]
+        """
+        L = maxWidth
+        start = 0
+        i = 0
+        n = len(words)
+        curr_len = 0
+        word_cnt = 0
+        res = []
+        while i < n:
+            w = words[i]
+            if curr_len + len(w) + word_cnt  > L:
+                spaces = (L-curr_len) / (word_cnt-1) if word_cnt != 1 else 0
+                extra = L-(curr_len+spaces*(word_cnt-1))
+                s = ''
+                for j in xrange(start, i):
+                    s += words[j]
+                    if j != i-1:
+                        s += (' ' * spaces)
+                    if extra > 0: s += ' '
+                    extra -= 1
+                if extra > 0: s += (' ' * extra)
+                curr_len = 0
+                word_cnt = 0
+                res.append(s)
+                start = i
+            else:
+                curr_len += len(w)
+                word_cnt += 1
+                i += 1
+        res.append(' '.join(words[n-word_cnt:]) + ' '* (L-curr_len-(word_cnt-1)))
+                
+        return res

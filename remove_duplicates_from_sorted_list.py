@@ -25,3 +25,22 @@ class Solution:
         pre.next = curr
         return dummy.next
         
+# 10.28.2015
+class Solution(object):
+    def deleteDuplicates(self, head):
+        """
+        :type head: ListNode
+        :rtype: ListNode
+        """
+        if not head: return head
+        dummy = ListNode(0)
+        dummy.next = head
+        pre, curr = dummy, head
+        while curr.next:
+            if curr.val == curr.next.val:
+                pre.next = curr.next
+            else:
+                pre = pre.next
+            curr = curr.next
+        
+        return dummy.next

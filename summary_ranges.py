@@ -21,3 +21,25 @@ class Solution:
         else:
             res.append(str(nums[len(nums)-1]))
         return res
+
+# 11.9.2015
+class Solution(object):
+    def summaryRanges(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[str]
+        """
+        if not nums: return []
+        res = []
+        left = 0
+        i = 1
+        while i < len(nums)+1:
+            if i == len(nums) or nums[i]-nums[i-1] != 1:
+                if left != i-1:
+                    res.append('->'.join([str(nums[left]), str(nums[i-1])]))
+                else:
+                    res.append(str(nums[left]))
+                left = i
+            i += 1
+                
+        return res
